@@ -832,12 +832,18 @@ int mt7996_mac_sta_event(struct mt76_dev *mdev, struct ieee80211_vif *vif,
 	struct mt7996_sta *msta = (struct mt7996_sta *)sta->drv_priv;
 	struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
 	struct mt7996_vif_link *link = &mvif->deflink;
+	struct mt7996_phy *phy = mt7996_vif_link_phy(link);
 	int i, ret;
 
 	switch (ev) {
 	case MT76_STA_EVENT_ASSOC:
 		ret = mt7996_mcu_add_sta(dev, vif, &link->mt76, sta,
 					 CONN_STATE_CONNECT, true);
+		if (ret)
+			return ret;
+
+		ret = mt7996_mcu_set_pp_en(phy, PP_USR_MODE,
+					   phy->mt76->chandef.punctured);
 		if (ret)
 			return ret;
 
