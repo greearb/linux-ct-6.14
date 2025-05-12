@@ -1620,7 +1620,7 @@ ieee80211_add_link_elems(struct ieee80211_sub_if_data *sdata,
 		*capab |= WLAN_CAPABILITY_SPECTRUM_MGMT;
 
 	if (sband->band != NL80211_BAND_S1GHZ)
-		ieee80211_assoc_add_rates(local, local, skb, width, sband, assoc_data, chan);
+		ieee80211_assoc_add_rates(local, sdata, skb, width, sband, assoc_data, chan);
 
 	if (*capab & WLAN_CAPABILITY_SPECTRUM_MGMT ||
 	    *capab & WLAN_CAPABILITY_RADIO_MEASURE) {
