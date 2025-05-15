@@ -1214,7 +1214,7 @@ static int mt7996_do_set_tx_ant(s8 cfg_radio_id, s8 actual_radio_id,
 	}
 
 	phy->mt76->chainmask = tx_ant & phy->orig_chainmask;
-	phy->mt76->antenna_mask = phy->mt76->chainmask >> shift;
+	phy->mt76->antenna_mask = (phy->mt76->chainmask >> shift) & phy->orig_antenna_mask;
 
 	mt76_set_stream_caps(phy->mt76, true);
 	mt7996_set_stream_vht_txbf_caps(phy);
